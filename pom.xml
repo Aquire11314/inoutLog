@@ -27,7 +27,7 @@
             <artifactId>sqlite-jdbc</artifactId>
             <version>3.23.1</version>
         </dependency>
-        <!--本地jar-->
+<!--        本地jar-->
         <dependency>
             <groupId>beautyeye</groupId>
             <artifactId>beautyeye</artifactId>

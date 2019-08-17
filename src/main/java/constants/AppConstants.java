@@ -8,7 +8,7 @@ package constants;
 
 /**
  * 模块说明： 常量
- * 
+ *
  */
 public class AppConstants {
 	// jdbc
@@ -17,11 +17,18 @@ public class AppConstants {
 	public static final String JDBC_PASSWORD = "test";
 	public static final String JDBC_DRIVER = "org.sqlite.JDBC";
 
-	// student field
+	// goods field
 	public static final String GOODS_INDEX = "编号";
 	public static final String GOODS_NAME = "物料名称";
 	public static final String GOODS_DESC = "备注";
 	public static final String GOODS_STORE = "库存";
+
+	// goodsLog field
+	public static final String GOODSLog_INDEX = "编号";
+	public static final String GOODSLog_NAME = "物料名称";
+	public static final String GOODSLog_DESC = "备注";
+	public static final String GOODSLog_NUM = "数量";
+	public static final String GOODSLog_CREATEDATE = "创建时间";
 
 	// login view
 	public static final String LOGIN_TITLE = "登录界面";
@@ -44,6 +51,9 @@ public class AppConstants {
 	public static final String PARAM_ADD = "添加";
 	public static final String PARAM_DELETE = "删除";
 	public static final String PARAM_UPDATE = "修改";
+
+	public static final String GOODSLOGVIEW_TITLE = "物料进出表";
+	public static final String GOODS_NUM= "物料进出数(+/-)";
 
 	// add view
 	public static final String ADDVIEW_TITLE = "添加物料信息";

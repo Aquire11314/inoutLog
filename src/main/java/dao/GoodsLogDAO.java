@@ -16,7 +16,7 @@ import java.util.List;
  * @create: 2019-08-04 21:11
  **/
 public class GoodsLogDAO extends BaseDAO {
-    private final int fieldNum = 3;
+    private final int fieldNum = 5;
     private final int showNum = 15;
     private static GoodsLogDAO ad = null;
 
@@ -33,8 +33,8 @@ public class GoodsLogDAO extends BaseDAO {
             return result;
         }
         try {
-            String sql = "insert into goodsLog(id,goodsId,desc,num,createDate) values(null,?,?,?,?)";
-            Object[] param = { goodsLog.getGoodsId(), goodsLog.getDesc(),goodsLog.getNum(),new Date()};
+            String sql = "insert into goodsLog(goodsId,desc,num,createDate) values(?,?,?,?)";
+            Object[] param = { goodsLog.getGoodsId(), goodsLog.getDesc(),goodsLog.getNum(),goodsLog.getCreateDate()};
             if (db.executeUpdate(sql, param) == 1) {
                 result = true;
             }
@@ -82,9 +82,9 @@ public class GoodsLogDAO extends BaseDAO {
     public String[][] selectByGoodsId(Integer id ,Integer pageNum) {
         String[][] result = null;
 
-        List<GoodsLog> goodsList = new ArrayList<GoodsLog>();
+        List<GoodsLog> goodsLogList = new ArrayList<GoodsLog>();
         int i = 0;
-        String sql = "select * from goodsLog where goodsId=? limit ?,? order by createDate desc";
+        String sql = "select * from goodsLog where goodsId=? order by createDate desc limit ?,?";
         int beginNum = (pageNum - 1) * showNum;
         Integer[] param = {id, beginNum, showNum };
 
@@ -92,12 +92,12 @@ public class GoodsLogDAO extends BaseDAO {
 
         try {
             while (rs.next()) {
-                buildList(rs, goodsList);
+                buildList(rs, goodsLogList);
             }
-            if (goodsList.size() > 0) {
-                result = new String[goodsList.size()][fieldNum];
-                for (int j = 0; j < goodsList.size(); j++) {
-                    buildResult(result, goodsList, j);
+            if (goodsLogList.size() > 0) {
+                result = new String[goodsLogList.size()][fieldNum];
+                for (int j = 0; j < goodsLogList.size(); j++) {
+                    buildResult(result, goodsLogList, j);
                 }
             }
         } catch (SQLException se) {
@@ -112,9 +112,10 @@ public class GoodsLogDAO extends BaseDAO {
     private void buildResult(String[][] result, List<GoodsLog> goodsLogList, int j) {
         GoodsLog goodsLog = goodsLogList.get(j);
         result[j][0] = String.valueOf(goodsLog.getId());
-        result[j][1] = String.valueOf(goodsLog.getNum());
-        result[j][2] = goodsLog.getDesc();
-        result[j][3] = goodsLog.getCreateDate().toString();
+        result[j][1] = String.valueOf(goodsLog.getGoodsId());
+        result[j][2] = String.valueOf(goodsLog.getNum());
+        result[j][3] = String.valueOf(goodsLog.getCreateDate());
+        result[j][4] = goodsLog.getDesc();
 
     }
 
@@ -125,6 +126,7 @@ public class GoodsLogDAO extends BaseDAO {
         goodsLog.setGoodsId(rs.getInt("goodsId"));
         goodsLog.setDesc(rs.getString("desc"));
         goodsLog.setNum(rs.getInt("num"));
+        goodsLog.setCreateDate(rs.getTimestamp("createDate"));
         list.add(goodsLog);
     }
 

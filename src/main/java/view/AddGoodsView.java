@@ -19,7 +19,7 @@ import java.awt.event.ActionListener;
 
 /**
  * 模块说明： 添加学生
- * 
+ *
  */
 public class AddGoodsView extends JFrame {
 
@@ -80,6 +80,7 @@ public class AddGoodsView extends JFrame {
 						String[][] result = ((GoodsDAO) BaseDAO.getAbilityDAO(DAO.GoodsDAO))
 								.selectLikeName(null,GoodsView.currPageNum);
 						GoodsView.initJTable(GoodsView.jTable, result);
+
 					}
 				}
 			}

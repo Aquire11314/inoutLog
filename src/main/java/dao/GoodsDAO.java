@@ -14,7 +14,7 @@ import java.util.List;
  * @create: 2019-08-04 15:31
  **/
 public class GoodsDAO extends BaseDAO {
-    private final int fieldNum = 3;
+    private final int fieldNum = 4;
     private final int showNum = 15;
 
     private static GoodsDAO ad = null;
@@ -94,7 +94,7 @@ public class GoodsDAO extends BaseDAO {
 
         List<Goods> goodsList = new ArrayList<Goods>();
         int i = 0;
-        String sql = "select * from goods ";
+        String sql = "select g.*,(select sum(num) from goodsLog where goodsId = g.id )sum from goods g ";
         if ((name==null||name.trim().length() <= 0)&&(pageNum==null||pageNum<0)) {
             rs = db.executeQuery(sql);
         }else if(name!=null&&name.trim().length() > 0){
@@ -151,6 +151,8 @@ public class GoodsDAO extends BaseDAO {
         result[j][0] = String.valueOf(goods.getId());
         result[j][1] = goods.getName();
         result[j][2] = goods.getDesc();
+        result[j][3] = String.valueOf(goods.getSum());
+
     }
 
     // 将rs记录添加到list中
@@ -159,6 +161,7 @@ public class GoodsDAO extends BaseDAO {
         goods.setId(rs.getInt("id"));
         goods.setName(rs.getString("name"));
         goods.setDesc(rs.getString("desc"));
+        goods.setSum(rs.getInt("sum"));
         list.add(goods);
     }
 

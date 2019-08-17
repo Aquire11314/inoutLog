@@ -21,7 +21,7 @@ import java.awt.event.*;
 
 /**
  * 模块说明： 首页
- * 
+ *
  */
 public class GoodsView extends JFrame {
 
@@ -97,10 +97,16 @@ public class GoodsView extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				int row=jTable.getSelectedRow();
+				if(row<0){
+					JOptionPane.showMessageDialog(null, "请选择一行记录！","",JOptionPane.PLAIN_MESSAGE);
+					return ;
+				}
+				System.out.println("row="+row);
 				Integer id=  new Integer(jTable.getValueAt(row,0).toString());
 				String name = (String) jTable.getValueAt(row,1);
 				String desc = (String) jTable.getValueAt(row,2);
-				new UpdateGoodsView(new Goods(id,name,desc));
+				Integer sum = new Integer(jTable.getValueAt(row,3).toString());
+				new UpdateGoodsView(new Goods(id,name,desc,sum));
 			}
 		});
 		jPanelNorth.add(jButtonUpdate);
@@ -202,11 +208,20 @@ public class GoodsView extends JFrame {
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setVisible(true);
 
-		//table 行行双击事件
+		//table 行双击事件
 		jTable.addMouseListener(new MouseAdapter(){
 			public void mouseClicked(MouseEvent e) {
 				if(e.getClickCount()==2){//点击几次，这里是双击事件
-					JOptionPane.showConfirmDialog(null, "你高兴吗?", "标题",JOptionPane.YES_NO_OPTION);
+					int row=jTable.getSelectedRow();
+					if(row<0){
+						JOptionPane.showMessageDialog(null, "请选择一行记录！","",JOptionPane.PLAIN_MESSAGE);
+						return ;
+					}
+					Integer id=  new Integer(jTable.getValueAt(row,0).toString());
+					String name = (String) jTable.getValueAt(row,1);
+					String desc = (String) jTable.getValueAt(row,2);
+					Integer sum = new Integer(jTable.getValueAt(row,3).toString());
+					new GoodsLogView(new Goods(id,name,desc,sum));
 				}
 			}
 		});
@@ -233,6 +248,10 @@ public class GoodsView extends JFrame {
 		}
 	}
 
+	public static void initFirst(){
+		String[][] result = ((GoodsDAO) BaseDAO.getAbilityDAO(DAO.GoodsDAO)).selectLikeName(null,1);
+		initJTable(GoodsView.jTable, result);
+	}
 	private void find() {
 		currPageNum = 0;
 		String param = condition.getText();

@@ -9,14 +9,16 @@ public class Goods {
     private Integer id;
     private String name;
     private String desc;
+    private Integer sum;
 
     public Goods() {
     }
 
-    public Goods(Integer id, String name, String desc) {
+    public Goods(Integer id, String name, String desc,Integer sum) {
         this.id = id;
         this.name = name;
         this.desc = desc;
+        this.sum =sum;
     }
 
     public Integer getId() {
@@ -41,5 +43,13 @@ public class Goods {
 
     public void setDesc(String desc) {
         this.desc = desc;
+    }
+
+    public Integer getSum() {
+        return sum;
+    }
+
+    public void setSum(Integer sum) {
+        this.sum = sum;
     }
 }
